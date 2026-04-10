@@ -6,12 +6,10 @@ const Offer: React.FC = () => {
       <div className="offer-box">
         <div className="offer" data-aos="fade-up">
           <h2 className="heading heading--2 margin-bottom">
-            Special offer this summer: get full benefits for a year with a 20%
-            discount.
+            Special offer this summer: Join now and get 3 months free personal training with any annual membership. Limited slots available!
           </h2>
           <p className="margin-bottom">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consectetur exercitationem amet quas repellendus esse natus.
+            Achieve your fitness goals with professional guidance and our complete range of services. Start your transformation today and become the best version of yourself.
           </p>
           <button className="btn btn__primary">Become a member</button>
         </div>

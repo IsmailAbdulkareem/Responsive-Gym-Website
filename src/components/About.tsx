@@ -7,13 +7,10 @@ const About: React.FC = () => {
       <div className="about-box container">
         <div className="about-box__content" data-aos="fade-up">
           <h2 className="heading heading--2">
-            About <span className="yellow">ISMAIL </span>Fitness
+            About <span className="yellow">GYM Fitness</span> Hub
           </h2>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam
-            dolor perferendis repellat ipsam fugiat dolorum possimus, modi ut
-            est saepe tempora earum. Consectetur blanditiis voluptatibus,
-            molestias explicabo tempora quae facilis.
+            Welcome to GYM Fitness Hub - your premier destination for complete fitness transformation. We combine state-of-the-art equipment with expert guidance to help you achieve your goals. Whether you're a beginner or an experienced athlete, our professional trainers are dedicated to creating personalized fitness plans that deliver real results.
           </p>
           <a href="#" className="link-button">Read More →</a>
         </div>

@@ -3,18 +3,25 @@ import React from "react";
 const Review: React.FC = () => {
   const reviews = [
     {
-      name: "Cesar Rincon",
+      name: "Ali Hassan",
       imgSrc:
         "https://raw.githubusercontent.com/Manoranjan-D/responsive-website-gym/master/img/review-img-1.jpg",
-      alt: "user Cesar Rincon",
-      text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente possimus aperiam",
+      alt: "user Ali Hassan",
+      text: "GYM Fitness Hub completely transformed my fitness journey. The trainers are extremely knowledgeable and the equipment is top-notch. Best decision I made for my health in Korangi!",
     },
     {
-      name: "Mathilde Langevin",
+      name: "Fatima Khan",
       imgSrc:
         "https://raw.githubusercontent.com/Manoranjan-D/responsive-website-gym/master/img/review-img-2.jpg",
-      alt: "user Mathilde Langevin",
-      text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente possimus aperiam",
+      alt: "user Fatima Khan",
+      text: "Outstanding experience! The female trainers are professional and supportive. Clean facilities, perfect location, and affordable pricing. Highly recommend to anyone serious about fitness.",
+    },
+    {
+      name: "Muhammad Saeed",
+      imgSrc:
+        "https://raw.githubusercontent.com/Manoranjan-D/responsive-website-gym/master/img/coache-1.jpg",
+      alt: "user Muhammad Saeed",
+      text: "I've been a member for 6 months and already see amazing results. The variety of courses and personalized guidance from Hassan Khan has been incredible. Worth every rupee!",
     },
   ];
 

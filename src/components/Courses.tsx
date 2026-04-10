@@ -7,9 +7,7 @@ const Courses: React.FC = () => {
         <header className="courses-heading">
           <h2 className="heading heading--2 underline">Our Courses</h2>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit
-            ducimus illum corporis magni voluptas, ex eum dolorum quia
-            officia! Deleniti quia ut.
+            Explore our diverse training programs designed to reach all fitness levels. From strength building to cardio conditioning, each program is crafted by experts to maximize results and keep you motivated throughout your fitness journey.
           </p>
         </header>
 
@@ -63,8 +61,7 @@ const Courses: React.FC = () => {
               <div className="class-card__overlay">
                 <div className="text">
                   <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Ratione culpa
+                    Expert instruction with personalized guidance. Learn proper technique, achieve faster results, and transform your body safely.
                   </p>
                   <a href="#" className="link-button">
                     Read More →

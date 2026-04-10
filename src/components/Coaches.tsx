@@ -3,20 +3,20 @@ import React from "react";
 const Coaches: React.FC = () => {
   const coaches = [
     {
-      name: "MARK BERTUL",
+      name: "HASSAN KHAN",
       title: "Body Building",
       imgSrc:
         "https://raw.githubusercontent.com/Manoranjan-D/responsive-website-gym/master/img/coache-1.jpg",
       alt: "coach one",
     },
     {
-      name: "SERIO MIKE",
+      name: "AHMED ALI",
       title: "Cardio Expert",
       imgSrc: "https://wallpapercave.com/wp/wp8852211.jpg",
       alt: "coach two",
     },
     {
-      name: "SVEN MIEKE",
+      name: "FAISAL AHMED",
       title: "Fitness Coach",
       imgSrc:
         "https://raw.githubusercontent.com/Manoranjan-D/responsive-website-gym/master/img/coache-3.jpg",
@@ -48,12 +48,10 @@ const Coaches: React.FC = () => {
       <div className="container coaches-box" data-aos="fade-up">
         <header className="coache-heading">
           <h2 className="heading heading--2 underline margin-bottom">
-            OUR FITNESS COACHES
+            OUR PROFESSIONAL <span className="yellow">TRAINERS</span>
           </h2>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit
-            ducimus illum corporis magni voluptas, ex eum dolorum quia
-            officia! Deleniti quia ut.
+            Meet our certified and experienced fitness coaches dedicated to helping you achieve your goals. Each trainer brings years of expertise in weight training, cardio, and functional fitness disciplines.
           </p>
         </header>
 

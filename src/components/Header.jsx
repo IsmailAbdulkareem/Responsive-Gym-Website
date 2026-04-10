@@ -9,7 +9,7 @@ const Header = () => {
     <header className="header" id="home">
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="logo text-white text-2xl"> {/* Increased logo size */}
-          <span className="text-yellow-400">ISMAIL</span>Fitness
+          <span className="text-yellow-400">GYM</span> Fitness Hub
         </div>
         <nav className="md:flex hidden">
           <ul className="flex space-x-8 text-xl list-none font-bold"> {/* Increased text size */}
