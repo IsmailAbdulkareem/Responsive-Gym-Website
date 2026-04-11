@@ -16,7 +16,7 @@ const navLinks: NavLink[] = [
   { href: '#pricing', label: 'Pricing' },
   { href: '#booking', label: 'Booking' },
   { href: '#contact', label: 'Contact' },
-  { href: '#booking', label: 'Join Now', isCTA: true },
+  { href: '#booking', label: 'Join Now', isCTA: true, key: 'join-now' },
 ];
 
 const Header: React.FC = memo(() => {
@@ -70,7 +70,7 @@ const Header: React.FC = memo(() => {
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.key || link.href}
                 href={link.href}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide transition-all duration-300 ${
                   link.isCTA
@@ -111,7 +111,7 @@ const Header: React.FC = memo(() => {
             <ul className="flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <li
-                  key={link.href}
+                  key={link.key || link.href}
                   className={`transition-all duration-300 ${
                     isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
                   }`}
