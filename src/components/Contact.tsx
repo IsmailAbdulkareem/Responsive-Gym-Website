@@ -2,12 +2,19 @@
 
 import React, { memo, useState, useCallback, FormEvent } from 'react';
 import { FiMapPin, FiPhone, FiMail, FiClock, FiSend } from 'react-icons/fi';
+import Toast from './Toast';
 
 interface FormData {
   name: string;
   email: string;
   phone: string;
   message: string;
+}
+
+interface ToastState {
+  show: boolean;
+  message: string;
+  type: 'success' | 'error';
 }
 
 const Contact: React.FC = memo(() => {
@@ -17,21 +24,56 @@ const Contact: React.FC = memo(() => {
     phone: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   }, []);
 
-  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
+  const handleCloseToast = useCallback(() => {
+    setToast(prev => ({ ...prev, show: false }));
+  }, []);
+
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setToast({ show: true, message: 'Message sent successfully! We\'ll get back to you within 24 hours.', type: 'success' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setToast({ show: true, message: result.error || 'Failed to send message. Please try again.', type: 'error' });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setToast({ show: true, message: 'Network error. Please check your connection and try again.', type: 'error' });
+    } finally {
+      setIsSubmitting(false);
+    }
   }, [formData]);
 
   return (
     <section id="contact" className="py-20 md:py-28 bg-gray-950 relative overflow-hidden">
+      {/* Toast Notification */}
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={handleCloseToast}
+        />
+      )}
+
       {/* Background Decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
 
@@ -71,7 +113,8 @@ const Contact: React.FC = memo(() => {
                     onChange={handleChange}
                     placeholder="John Doe"
                     required
-                    className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div>
@@ -86,7 +129,8 @@ const Contact: React.FC = memo(() => {
                     onChange={handleChange}
                     placeholder="john@example.com"
                     required
-                    className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -102,7 +146,8 @@ const Contact: React.FC = memo(() => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+92-300-1234567"
-                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300"
+                  disabled={isSubmitting}
+                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
 
@@ -118,16 +163,27 @@ const Contact: React.FC = memo(() => {
                   rows={5}
                   placeholder="Tell us about your fitness goals or any questions you have..."
                   required
-                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300 resize-none"
+                  disabled={isSubmitting}
+                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-300 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 bg-yellow-400 text-black font-bold px-8 py-4 rounded-xl uppercase tracking-wide transition-all duration-300 hover:bg-yellow-500 hover:shadow-2xl hover:shadow-yellow-400/25"
+                disabled={isSubmitting}
+                className="w-full inline-flex items-center justify-center gap-2 bg-yellow-400 text-black font-bold px-8 py-4 rounded-xl uppercase tracking-wide transition-all duration-300 hover:bg-yellow-500 hover:shadow-2xl hover:shadow-yellow-400/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400"
               >
-                <FiSend />
-                Send Message
+                {isSubmitting ? (
+                  <>
+                    <span className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <FiSend />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           </div>

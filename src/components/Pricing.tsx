@@ -64,7 +64,18 @@ const plans: PricingPlan[] = [
   },
 ];
 
-const PricingCard: React.FC<{ plan: PricingPlan }> = memo(({ plan }) => {
+const PricingCard: React.FC<{ plan: PricingPlan; onSelectPlan?: (planName: string) => void }> = memo(({ plan, onSelectPlan }) => {
+  const handleSelect = () => {
+    if (onSelectPlan) {
+      onSelectPlan(plan.name);
+    }
+    // Scroll to booking section
+    const bookingSection = document.getElementById('booking');
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div
       className={`relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 ${
@@ -115,6 +126,7 @@ const PricingCard: React.FC<{ plan: PricingPlan }> = memo(({ plan }) => {
       {/* CTA Button */}
       <div className="p-8 pt-0">
         <button
+          onClick={handleSelect}
           className={`w-full py-4 rounded-xl font-bold uppercase tracking-wide transition-all duration-300 ${
             plan.highlighted
               ? 'bg-black text-yellow-400 hover:bg-gray-900 hover:shadow-lg'

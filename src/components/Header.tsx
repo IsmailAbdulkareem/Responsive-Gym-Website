@@ -13,9 +13,10 @@ const navLinks: NavLink[] = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#courses', label: 'Courses' },
-  { href: '#trainers', label: 'Trainers' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#booking', label: 'Booking' },
   { href: '#contact', label: 'Contact' },
-  { href: '#offer', label: 'Become a Member', isCTA: true },
+  { href: '#booking', label: 'Join Now', isCTA: true },
 ];
 
 const Header: React.FC = memo(() => {

@@ -58,17 +58,17 @@ const Offer: React.FC = memo(() => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="#pricing"
+                href="#booking"
                 className="group inline-flex items-center justify-center gap-2 bg-yellow-400 text-black font-bold px-8 py-4 rounded-xl text-lg uppercase tracking-wide transition-all duration-300 hover:bg-yellow-500 hover:shadow-2xl hover:shadow-yellow-400/25 hover:-translate-y-1"
               >
                 Claim This Offer
                 <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
               </a>
               <a
-                href="#contact"
+                href="#booking"
                 className="inline-flex items-center justify-center gap-2 bg-white/5 border-2 border-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg uppercase tracking-wide transition-all duration-300 hover:bg-white/10 hover:border-yellow-400/50 hover:-translate-y-1"
               >
-                Learn More
+                Become a Member
               </a>
             </div>
           </div>
