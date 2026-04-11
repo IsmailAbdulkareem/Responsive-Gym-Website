@@ -7,6 +7,7 @@ interface NavLink {
   href: string;
   label: string;
   isCTA?: boolean;
+  key?: string;
 }
 
 const navLinks: NavLink[] = [
