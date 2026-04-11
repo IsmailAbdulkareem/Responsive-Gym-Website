@@ -1,14 +1,6 @@
 import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -30,6 +22,29 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const emailUser = process.env.EMAIL_USER;
+    const emailPass = process.env.EMAIL_PASS;
+
+    if (!emailUser || !emailPass) {
+      console.error('Missing EMAIL_USER or EMAIL_PASS environment variables');
+      return NextResponse.json(
+        { success: false, error: 'Email configuration is missing' },
+        { status: 500 }
+      );
+    }
+
+    // Create transporter
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: emailUser,
+        pass: emailPass,
+      },
+    });
+
+    // Verify transporter
+    await transporter.verify();
 
     const planDetails: Record<string, { name: string; price: string; features: string }> = {
       BASIC: {
@@ -53,8 +68,8 @@ export async function POST(request: NextRequest) {
 
     // Email to gym owner
     const mailOptions = {
-      from: `"GYM Fitness Hub Website" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
+      from: `"GYM Fitness Hub Website" <${emailUser}>`,
+      to: emailUser,
       subject: `New Membership Booking: ${fullName} - ${plan.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -127,7 +142,7 @@ export async function POST(request: NextRequest) {
 
     // Auto-reply to user
     const autoReplyOptions = {
-      from: `"GYM Fitness Hub" <${process.env.EMAIL_USER}>`,
+      from: `"GYM Fitness Hub" <${emailUser}>`,
       to: email,
       subject: `Welcome to GYM Fitness Hub - ${plan.name} Booking Confirmation`,
       html: `
@@ -182,8 +197,9 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error('Error sending booking email:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { success: false, error: 'Failed to submit booking' },
+      { success: false, error: `Failed to submit booking: ${errorMessage}` },
       { status: 500 }
     );
   }
