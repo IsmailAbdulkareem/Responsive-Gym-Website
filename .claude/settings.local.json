@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000/booking)",
+      "Bash(curl -s http://localhost:3000/contact)",
+      "Bash(git add *)"
+    ]
+  }
+}

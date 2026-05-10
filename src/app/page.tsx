@@ -12,8 +12,6 @@ const Offer = dynamic(() => import('@/components/Offer'), { ssr: true });
 const Coaches = dynamic(() => import('@/components/Coaches'), { ssr: true });
 const Reviews = dynamic(() => import('@/components/Reviews'), { ssr: true });
 const OpeningHours = dynamic(() => import('@/components/OpeningHours'), { ssr: true });
-const Booking = dynamic(() => import('@/components/Booking'), { ssr: true });
-const Contact = dynamic(() => import('@/components/Contact'), { ssr: true });
 const Footer = dynamic(() => import('@/components/Footer'), { ssr: true });
 
 export const metadata: Metadata = {
@@ -40,8 +38,6 @@ export default function Home() {
       <Coaches />
       <Reviews />
       <OpeningHours />
-      <Booking />
-      <Contact />
       <Footer />
       <WhatsAppButton />
     </main>

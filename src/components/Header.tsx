@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useCallback, useEffect, memo } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiActivity } from 'react-icons/fi';
 
 interface NavLink {
@@ -8,21 +10,23 @@ interface NavLink {
   label: string;
   isCTA?: boolean;
   key?: string;
+  isRoute?: boolean; // true for page routes, false for anchor links
 }
 
 const navLinks: NavLink[] = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#courses', label: 'Courses' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '#booking', label: 'Booking' },
-  { href: '#contact', label: 'Contact' },
-  { href: '#booking', label: 'Join Now', isCTA: true, key: 'join-now' },
+  { href: '/', label: 'Home', isRoute: true },
+  { href: '#about', label: 'About', isRoute: false },
+  { href: '#courses', label: 'Courses', isRoute: false },
+  { href: '#pricing', label: 'Pricing', isRoute: false },
+  { href: '/booking', label: 'Booking', isRoute: true },
+  { href: '/contact', label: 'Contact', isRoute: true },
+  { href: '/booking', label: 'Join Now', isCTA: true, key: 'join-now', isRoute: true },
 ];
 
 const Header: React.FC = memo(() => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,7 +57,7 @@ const Header: React.FC = memo(() => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group">
             <div className="relative">
               <FiActivity className="text-yellow-400 text-3xl transition-transform duration-300 group-hover:rotate-12" />
               <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -65,23 +69,35 @@ const Header: React.FC = memo(() => {
               </span>
               <span className="text-[0.6rem] uppercase tracking-[0.3em] text-gray-400 -mt-1">Hub</span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <a
-                key={link.key || link.href}
-                href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide transition-all duration-300 ${
-                  link.isCTA
-                    ? 'bg-yellow-400 text-black hover:bg-yellow-500 hover:shadow-lg hover:shadow-yellow-400/25 ml-2'
-                    : 'text-white hover:text-yellow-400 hover:bg-white/5'
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const linkClasses = `px-4 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide transition-all duration-300 ${
+                link.isCTA
+                  ? 'bg-yellow-400 text-black hover:bg-yellow-500 hover:shadow-lg hover:shadow-yellow-400/25 ml-2'
+                  : 'text-white hover:text-yellow-400 hover:bg-white/5'
+              }`;
+
+              return link.isRoute ? (
+                <Link
+                  key={link.key || link.href}
+                  href={link.href}
+                  className={linkClasses}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.key || link.href}
+                  href={link.href}
+                  className={linkClasses}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -110,27 +126,41 @@ const Header: React.FC = memo(() => {
         >
           <nav className="bg-gray-900/95 backdrop-blur-md rounded-xl p-4 border border-white/10" aria-label="Mobile navigation">
             <ul className="flex flex-col gap-2">
-              {navLinks.map((link, index) => (
-                <li
-                  key={link.key || link.href}
-                  className={`transition-all duration-300 ${
-                    isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
-                  }`}
-                  style={{ transitionDelay: `${index * 50}ms` }}
-                >
-                  <a
-                    href={link.href}
-                    onClick={closeMenu}
-                    className={`block px-4 py-3 rounded-lg text-center font-semibold uppercase tracking-wide transition-all duration-300 ${
-                      link.isCTA
-                        ? 'bg-yellow-400 text-black hover:bg-yellow-500'
-                        : 'text-white hover:text-yellow-400 hover:bg-white/5'
+              {navLinks.map((link, index) => {
+                const linkClasses = `block px-4 py-3 rounded-lg text-center font-semibold uppercase tracking-wide transition-all duration-300 ${
+                  link.isCTA
+                    ? 'bg-yellow-400 text-black hover:bg-yellow-500'
+                    : 'text-white hover:text-yellow-400 hover:bg-white/5'
+                }`;
+
+                return (
+                  <li
+                    key={link.key || link.href}
+                    className={`transition-all duration-300 ${
+                      isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
                     }`}
+                    style={{ transitionDelay: `${index * 50}ms` }}
                   >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+                    {link.isRoute ? (
+                      <Link
+                        href={link.href}
+                        onClick={closeMenu}
+                        className={linkClasses}
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        onClick={closeMenu}
+                        className={linkClasses}
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         </div>
